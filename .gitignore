@@ -1,0 +1,10 @@
+.build/
+.swiftpm/
+.vscode/
+
+energy_logs.csv
+
+__pycache__/
+*.pyc
+
+.DS_Store
