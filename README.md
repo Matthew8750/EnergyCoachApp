@@ -1,17 +1,55 @@
 # EnergyAppBrain
 
-EnergyAppBrain is an early prototype for an energy prediction app.
+EnergyAppBrain is a prototype energy prediction project. It combines a Swift app brain with a small Python AI prototype to estimate daily energy from sleep, lifestyle, mood, stress, and Apple Watch-style health metrics.
 
-The project has two parts:
+Status: early prototype.
 
-- A Swift command-line app that scores energy from sleep, lifestyle, mood, stress, and Apple Watch-style metrics.
-- A Python AI prototype that reads exported CSV logs and predicts actual energy from past patterns.
+## What It Does
+
+- Scores daily energy from 0-100.
+- Predicts energy from 1-10.
+- Explains why the score changed.
+- Gives recovery, training, sleep, caffeine, and nutrition recommendations.
+- Saves daily logs to CSV.
+- Lets actual energy be filled in later.
+- Uses Python to predict actual energy from logged patterns.
+- Keeps private health/lifestyle data out of Git.
+
+## Why This Exists
+
+The long-term idea is an iPhone and Apple Watch app that helps answer:
+
+```text
+How much energy am I likely to have today, and what should I do about it?
+```
+
+For now, the project focuses on the reusable logic:
+
+- scoring,
+- recommendations,
+- logging,
+- data export,
+- AI prediction.
+
+## Current Architecture
+
+```text
+Swift command-line app
+  -> manual or demo inputs
+  -> energy score
+  -> recommendations
+  -> energy_logs.csv
+  -> Python AI prototype
+  -> predicted actual energy
+```
 
 ## Project Structure
 
 ```text
 EnergyAppBrain/
   Package.swift
+  README.md
+  .gitignore
   energy_logs.example.csv
   Sources/
     EnergyAppBrain/
@@ -24,6 +62,7 @@ EnergyAppBrain/
       ReportPrinter.swift
       DailyLogStore.swift
       Formatter.swift
+      ManualEntry.swift
   Tests/
     EnergyAppBrainTests/
       EnergyScorerTests.swift
@@ -33,32 +72,15 @@ EnergyAppBrain/
     test_energy_model.py
 ```
 
-## Run The Swift App
+## Swift App
 
-From the `EnergyAppBrain` folder:
+Run from the `EnergyAppBrain` folder:
 
 ```powershell
 swift run
 ```
 
-## Run The Swift Tests
-
-From the `EnergyAppBrain` folder:
-
-```powershell
-swift test
-```
-
-The Swift app:
-
-- runs demo health scenarios or accepts a manual daily log,
-- calculates an energy score,
-- predicts energy out of 10,
-- explains why the score changed,
-- gives recovery, training, sleep, caffeine, and nutrition recommendations,
-- exports `energy_logs.csv`.
-
-When the app starts, choose:
+The app menu:
 
 ```text
 1. Run demo scenarios
@@ -66,51 +88,94 @@ When the app starts, choose:
 3. Update missing actual energy
 ```
 
-Manual mode asks for a day name/date, sleep, alcohol, caffeine, mood, stress, Apple Watch-style metrics, and optional actual energy. It then appends the row to `energy_logs.csv`.
+Manual mode asks for:
 
-Update mode shows saved rows where `actualEnergy` is blank and lets you fill in the final rating later.
+- day name/date,
+- sleep,
+- alcohol,
+- caffeine,
+- mood,
+- stress,
+- resting heart rate,
+- HRV,
+- steps,
+- active energy,
+- exercise minutes,
+- workout intensity,
+- actual energy.
 
-## Run The Python AI Prototype
+If actual energy is not known yet, it can be left blank and added later through option 3.
 
-From the `EnergyAppBrain` folder:
+## Python AI Prototype
+
+Run from the `EnergyAppBrain` folder:
 
 ```powershell
 py ai\train_energy_model.py
 ```
 
-## Run The Python Tests
+The Python script:
 
-From the `EnergyAppBrain` folder:
+- reads `energy_logs.csv` if it exists,
+- falls back to `energy_logs.example.csv` if private logs do not exist,
+- ignores rows where `actualEnergy` is blank,
+- prints a data summary,
+- predicts actual energy for the latest saved log,
+- compares example days to logged days,
+- uses nearest-neighbour matching,
+- shows similarity scores.
+
+## Tests
+
+Run Swift tests:
+
+```powershell
+swift test
+```
+
+Run Python tests:
 
 ```powershell
 py -m unittest ai.test_energy_model
 ```
 
-The Python script:
-
-- reads `energy_logs.csv` if it exists, otherwise falls back to `energy_logs.example.csv`,
-- ignores rows where `actualEnergy` is blank,
-- prints a data summary,
-- compares example days to logged days,
-- predicts actual energy,
-- shows the closest matches and similarity scores.
-
-## Current Data Flow
+## Example Output
 
 ```text
-Swift demo inputs
-  -> energy score
-  -> recommendations
-  -> energy_logs.csv
-  -> Python AI prototype
-  -> predicted actual energy
+Energy score: 39/100
+Predicted energy: 4/10
+
+Why this score:
+- Starting baseline: +80
+- Slept under 7 hours: -10
+- Caffeine after 6pm: -10
+- Very high stress: -10
+- Resting heart rate: -3
+- Heart rate variability: -8
+
+Recommendations:
+- Recovery: Prioritise hydration, easy movement, and a calmer day if possible.
+- Training: Avoid intense training. Choose rest, walking, stretching, or light technique work.
+- Sleep: Try to add 30 to 60 minutes of sleep tonight.
 ```
 
-## Future App Direction
+## Data Privacy
 
-Later, the Swift app can become an iPhone app that reads real Apple Watch data through HealthKit.
+`energy_logs.csv` is ignored by Git because it may contain personal health and lifestyle data.
 
-Possible Apple Watch / HealthKit inputs:
+Commit this file instead:
+
+```text
+energy_logs.example.csv
+```
+
+That file contains fake sample data so the project works after cloning without exposing private logs.
+
+## Future Direction
+
+Later, this can become an iPhone and Apple Watch app using SwiftUI and HealthKit.
+
+Possible HealthKit inputs:
 
 - sleep duration,
 - resting heart rate,
@@ -127,15 +192,10 @@ Manual inputs will still be useful for things Apple Watch cannot reliably know:
 - mood,
 - stress.
 
-## Next Ideas
+## Roadmap
 
-- Add more real daily logs.
-- Fill in `actualEnergy` whenever possible so Python has training data.
-- Upgrade Python from nearest-neighbour matching to a real machine learning model.
-- Later convert the Swift logic into an iPhone app with SwiftUI and HealthKit.
-
-## GitHub Privacy
-
-`energy_logs.csv` is ignored by Git because it may eventually contain personal health and lifestyle data.
-
-Commit `energy_logs.example.csv` instead. It contains fake sample data so the project still runs after cloning.
+- Collect more real daily logs.
+- Improve the scoring rules from real patterns.
+- Upgrade Python from nearest-neighbour matching to a proper machine learning model.
+- Convert the Swift command-line flow into a SwiftUI app.
+- Add HealthKit and Apple Watch integration on macOS/Xcode.

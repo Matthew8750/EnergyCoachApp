@@ -16,6 +16,27 @@ class EnergyModelTests(unittest.TestCase):
         self.assertEqual(len(training_rows), 1)
         self.assertEqual(training_rows[0]["actualEnergy"], "5")
 
+    def test_latest_log_returns_newest_row(self):
+        rows = [
+            {"date": "First"},
+            {"date": "Second"},
+        ]
+
+        self.assertEqual(train_energy_model.latest_log(rows)["date"], "Second")
+
+    def test_training_logs_for_target_excludes_target_row(self):
+        target = {"date": "Target", "actualEnergy": "6"}
+        rows = [
+            {"date": "Training", "actualEnergy": "5"},
+            target,
+            {"date": "Incomplete", "actualEnergy": ""},
+        ]
+
+        training_rows = train_energy_model.training_logs_for_target(rows, target)
+
+        self.assertEqual(len(training_rows), 1)
+        self.assertEqual(training_rows[0]["date"], "Training")
+
     def test_parse_bool_converts_true_and_false(self):
         self.assertEqual(train_energy_model.parse_bool("true"), 1.0)
         self.assertEqual(train_energy_model.parse_bool("false"), 0.0)

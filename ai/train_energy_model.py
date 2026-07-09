@@ -43,6 +43,21 @@ def filter_training_logs(logs):
     ]
 
 
+def latest_log(logs):
+    if not logs:
+        return None
+
+    return logs[-1]
+
+
+def training_logs_for_target(logs, target):
+    return [
+        row
+        for row in filter_training_logs(logs)
+        if row is not target
+    ]
+
+
 def parse_bool(value):
     return 1.0 if value.lower() == "true" else 0.0
 
@@ -260,6 +275,41 @@ def print_prediction_report(example_day, result):
         print(f"- {column}: {example_day[column]}")
 
 
+def print_latest_log_prediction(all_logs):
+    target = latest_log(all_logs)
+
+    if target is None:
+        print("No logs available for latest-log prediction.")
+        return
+
+    logs = training_logs_for_target(all_logs, target)
+
+    if len(logs) < 2:
+        print("Not enough completed logs to predict the latest entry yet.")
+        return
+
+    result = predict_actual_energy(target, logs)
+    actual_energy = target.get("actualEnergy", "").strip()
+
+    print("Latest log prediction")
+    print(f"Latest log: {target['date']}")
+    print(f"Swift predicted energy: {target['predictedEnergy']}/10")
+    print(f"Python predicted actual energy: {result['prediction']}/10")
+
+    if actual_energy:
+        print(f"Recorded actual energy: {actual_energy}/10")
+
+    print(f"Best matching logged day: {result['matched_day']}")
+    print(f"Best match similarity: {result['similarity']:.0%}")
+    print("")
+    print("Nearest matches:")
+    for match in result["matches"]:
+        print(
+            f"- {match['date']}: actual {match['actual_energy']}/10, "
+            f"similarity {match['similarity']:.0%}"
+        )
+
+
 def main():
     csv_path = choose_csv_path()
     all_logs = load_logs()
@@ -278,6 +328,10 @@ def main():
     if len(logs) < 2:
         print("Not enough completed logs yet. Add actualEnergy ratings to at least 2 rows.")
         return
+
+    print_latest_log_prediction(all_logs)
+    print("----------------------------------------")
+    print("")
 
     for index, example_day in enumerate(example_days):
         result = predict_actual_energy(example_day, logs)
