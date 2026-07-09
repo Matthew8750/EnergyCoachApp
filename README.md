@@ -28,7 +28,9 @@ EnergyAppBrain/
     EnergyAppBrainTests/
       EnergyScorerTests.swift
   ai/
+    __init__.py
     train_energy_model.py
+    test_energy_model.py
 ```
 
 ## Run The Swift App
@@ -74,6 +76,14 @@ From the `EnergyAppBrain` folder:
 
 ```powershell
 py ai\train_energy_model.py
+```
+
+## Run The Python Tests
+
+From the `EnergyAppBrain` folder:
+
+```powershell
+py -m unittest ai.test_energy_model
 ```
 
 The Python script:
