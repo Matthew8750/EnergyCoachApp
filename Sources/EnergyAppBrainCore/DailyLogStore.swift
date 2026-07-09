@@ -116,12 +116,17 @@ public struct DailyLogStore {
         }
     }
 
-    public static func printLogSummary(fileName: String) {
+    public static func printLogSummary(fileName: String, fallbackFileName: String = "energy_logs.example.csv") {
         do {
-            let rows = try loadCSVRows(fileName: fileName)
+            let source = try loadCSVRowsForReading(fileName: fileName, fallbackFileName: fallbackFileName)
+            let rows = source.rows
             let summary = makeLogSummary(from: rows)
 
             print("")
+            if source.fileName != fileName {
+                print("Using \(source.fileName) because \(fileName) was not found.")
+                print("")
+            }
             print("Log summary")
             print("- Total logs: \(summary.totalLogs)")
             print("- Completed logs: \(summary.completedLogs)")
@@ -136,9 +141,10 @@ public struct DailyLogStore {
         }
     }
 
-    public static func printRecentLogs(fileName: String, count: Int = 5) {
+    public static func printRecentLogs(fileName: String, count: Int = 5, fallbackFileName: String = "energy_logs.example.csv") {
         do {
-            let rows = try loadCSVRows(fileName: fileName)
+            let source = try loadCSVRowsForReading(fileName: fileName, fallbackFileName: fallbackFileName)
+            let rows = source.rows
             let lines = makeRecentLogLines(from: rows, count: count)
 
             guard !lines.isEmpty else {
@@ -147,6 +153,10 @@ public struct DailyLogStore {
             }
 
             print("")
+            if source.fileName != fileName {
+                print("Using \(source.fileName) because \(fileName) was not found.")
+                print("")
+            }
             print("Recent logs")
             for line in lines {
                 print(line)
@@ -205,6 +215,18 @@ public struct DailyLogStore {
         }
     }
 
+    static func readableLogFileName(
+        preferredFileName: String,
+        fallbackFileName: String,
+        fileExists: (String) -> Bool
+    ) -> String {
+        if fileExists(preferredFileName) {
+            return preferredFileName
+        }
+
+        return fallbackFileName
+    }
+
     private static func makeDailyLogCSV(from logs: [DailyEnergyLog]) -> String {
         var rows = [
             "date,sleepHours,alcoholDrinks,lateCaffeine,mood,stress,restingHeartRate,hrv,steps,workoutIntensity,predictedEnergy,actualEnergy"
@@ -236,6 +258,21 @@ public struct DailyLogStore {
         ]
 
         return columns.map(TextFormatter.escapeCSVValue).joined(separator: ",")
+    }
+
+    private static func loadCSVRowsForReading(fileName: String, fallbackFileName: String) throws -> (rows: [[String]], fileName: String) {
+        let selectedFileName = readableLogFileName(
+            preferredFileName: fileName,
+            fallbackFileName: fallbackFileName,
+            fileExists: { candidate in
+                let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+                    .appendingPathComponent(candidate)
+
+                return FileManager.default.fileExists(atPath: fileURL.path)
+            }
+        )
+
+        return (try loadCSVRows(fileName: selectedFileName), selectedFileName)
     }
 
     private static func loadCSVRows(fileName: String) throws -> [[String]] {

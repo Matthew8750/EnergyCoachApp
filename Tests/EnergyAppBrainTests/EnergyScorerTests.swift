@@ -95,6 +95,26 @@ final class EnergyScorerTests: XCTestCase {
         XCTAssertTrue(lines[1].contains("actual 8/10"))
     }
 
+    func testReadableLogFileFallsBackToExampleWhenPrivateLogIsMissing() {
+        let selectedFile = DailyLogStore.readableLogFileName(
+            preferredFileName: "energy_logs.csv",
+            fallbackFileName: "energy_logs.example.csv",
+            fileExists: { $0 == "energy_logs.example.csv" }
+        )
+
+        XCTAssertEqual(selectedFile, "energy_logs.example.csv")
+    }
+
+    func testReadableLogFilePrefersPrivateLogWhenAvailable() {
+        let selectedFile = DailyLogStore.readableLogFileName(
+            preferredFileName: "energy_logs.csv",
+            fallbackFileName: "energy_logs.example.csv",
+            fileExists: { $0 == "energy_logs.csv" }
+        )
+
+        XCTAssertEqual(selectedFile, "energy_logs.csv")
+    }
+
     private func scenario(named name: String) -> EnergyInput {
         guard let input = DemoData.makeDemoScenarios().first(where: { $0.dateLabel == name }) else {
             XCTFail("Missing scenario named \(name)")

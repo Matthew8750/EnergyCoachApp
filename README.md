@@ -15,6 +15,7 @@ Status: early prototype.
 - Saves daily logs to CSV.
 - Lets actual energy be filled in later.
 - Shows recent saved logs.
+- Falls back to fake example data when private logs do not exist yet.
 - Uses Python to predict actual energy from logged patterns.
 - Keeps private health/lifestyle data out of Git.
 
@@ -111,6 +112,8 @@ Manual mode asks for:
 - actual energy.
 
 If actual energy is not known yet, it can be left blank and added later through option 2.
+
+If `energy_logs.csv` does not exist yet, summary and recent-log views use `energy_logs.example.csv` so the project still works after a fresh clone.
 
 ## Python AI Prototype
 
