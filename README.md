@@ -9,6 +9,8 @@ Status: early prototype.
 - Scores daily energy from 0-100.
 - Predicts energy from 1-10.
 - Explains why the score changed.
+- Uses progressive alcohol penalties instead of a flat per-drink penalty.
+- Detects recovery strain from low HRV plus elevated resting heart rate.
 - Gives recovery, training, sleep, caffeine, and nutrition recommendations.
 - Saves daily logs to CSV.
 - Lets actual energy be filled in later.
@@ -83,9 +85,11 @@ swift run
 The app menu:
 
 ```text
-1. Run demo scenarios
-2. Add manual daily log
-3. Update missing actual energy
+1. Add today's log
+2. Update actual energy
+3. View log summary
+4. Run demo scenarios
+5. Exit
 ```
 
 Manual mode asks for:

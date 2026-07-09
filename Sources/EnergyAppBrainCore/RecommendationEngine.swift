@@ -25,6 +25,10 @@ public struct RecommendationEngine {
     }
 
     private static func makeRecoveryRecommendation(for input: EnergyInput, score: Int) -> String {
+        if EnergyScorer.recoveryStrainAdjustment(for: input.appleWatch) < 0 {
+            return "Recovery looks compromised today. Prioritise rest, hydration, and low-intensity movement."
+        }
+
         if score < 40 {
             return "Prioritise hydration, easy movement, and a calmer day if possible."
         }

@@ -116,6 +116,57 @@ public struct DailyLogStore {
         }
     }
 
+    public static func printLogSummary(fileName: String) {
+        do {
+            let rows = try loadCSVRows(fileName: fileName)
+            let summary = makeLogSummary(from: rows)
+
+            print("")
+            print("Log summary")
+            print("- Total logs: \(summary.totalLogs)")
+            print("- Completed logs: \(summary.completedLogs)")
+            print("- Missing actual energy: \(summary.missingActualEnergy)")
+            print("- Average predicted energy: \(formatOptionalAverage(summary.averagePredictedEnergy))")
+            print("- Average actual energy: \(formatOptionalAverage(summary.averageActualEnergy))")
+            print("- Lowest actual energy day: \(summary.lowestActualEnergyDay ?? "Not available")")
+            print("- Highest actual energy day: \(summary.highestActualEnergyDay ?? "Not available")")
+            print("- Recent trend: \(summary.recentTrend)")
+        } catch {
+            print("Could not read \(fileName): \(error.localizedDescription)")
+        }
+    }
+
+    public static func makeLogSummary(from rows: [[String]]) -> LogSummary {
+        let dataRows = rows.filter { !$0.isEmpty }
+        let completedRows = dataRows.filter { row in
+            !(row[safe: 11] ?? "").isEmpty
+        }
+
+        let predictedValues = dataRows.compactMap { row in
+            Double(row[safe: 10] ?? "")
+        }
+        let actualValues = completedRows.compactMap { row in
+            Double(row[safe: 11] ?? "")
+        }
+        let lowestRow = completedRows.min { first, second in
+            (Double(first[safe: 11] ?? "") ?? 0) < (Double(second[safe: 11] ?? "") ?? 0)
+        }
+        let highestRow = completedRows.max { first, second in
+            (Double(first[safe: 11] ?? "") ?? 0) < (Double(second[safe: 11] ?? "") ?? 0)
+        }
+
+        return LogSummary(
+            totalLogs: dataRows.count,
+            completedLogs: completedRows.count,
+            missingActualEnergy: dataRows.count - completedRows.count,
+            averagePredictedEnergy: average(predictedValues),
+            averageActualEnergy: average(actualValues),
+            lowestActualEnergyDay: lowestRow?[safe: 0],
+            highestActualEnergyDay: highestRow?[safe: 0],
+            recentTrend: recentTrend(from: actualValues)
+        )
+    }
+
     private static func makeDailyLogCSV(from logs: [DailyEnergyLog]) -> String {
         var rows = [
             "date,sleepHours,alcoholDrinks,lateCaffeine,mood,stress,restingHeartRate,hrv,steps,workoutIntensity,predictedEnergy,actualEnergy"
@@ -147,6 +198,54 @@ public struct DailyLogStore {
         ]
 
         return columns.map(TextFormatter.escapeCSVValue).joined(separator: ",")
+    }
+
+    private static func loadCSVRows(fileName: String) throws -> [[String]] {
+        let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+            .appendingPathComponent(fileName)
+        let csv = try String(contentsOf: fileURL, encoding: .utf8)
+        let rows = csv
+            .split(whereSeparator: \.isNewline)
+            .dropFirst()
+            .map { parseCSVRow(String($0)) }
+
+        return rows
+    }
+
+    private static func average(_ values: [Double]) -> Double? {
+        if values.isEmpty {
+            return nil
+        }
+
+        return values.reduce(0, +) / Double(values.count)
+    }
+
+    private static func recentTrend(from actualValues: [Double]) -> String {
+        guard actualValues.count >= 2 else {
+            return "Not enough data"
+        }
+
+        let previous = actualValues[actualValues.count - 2]
+        let latest = actualValues[actualValues.count - 1]
+        let difference = latest - previous
+
+        if difference >= 1 {
+            return "Improving"
+        }
+
+        if difference <= -1 {
+            return "Declining"
+        }
+
+        return "Stable"
+    }
+
+    private static func formatOptionalAverage(_ value: Double?) -> String {
+        guard let value else {
+            return "Not available"
+        }
+
+        return TextFormatter.formatDecimal(value)
     }
 
     private static func parseCSVRow(_ row: String) -> [String] {

@@ -36,7 +36,7 @@ public struct EnergyScorer {
 
     private static func addLifestyleAdjustments(input: EnergyInput, breakdown: inout [ScoreAdjustment]) {
         if input.alcoholDrinks > 0 {
-            breakdown.append(ScoreAdjustment(label: "\(input.alcoholDrinks) alcohol drinks", points: -input.alcoholDrinks * 8))
+            breakdown.append(ScoreAdjustment(label: "\(input.alcoholDrinks) alcohol drinks", points: alcoholAdjustment(for: input.alcoholDrinks)))
         }
 
         if input.hadCaffeineAfter6pm {
@@ -72,12 +72,45 @@ public struct EnergyScorer {
         if let steps = input.appleWatch.steps {
             appendIfNeeded(label: "Steps", points: stepsAdjustment(for: steps), breakdown: &breakdown)
         }
+
+        appendIfNeeded(label: "Recovery strain", points: recoveryStrainAdjustment(for: input.appleWatch), breakdown: &breakdown)
     }
 
     private static func appendIfNeeded(label: String, points: Int, breakdown: inout [ScoreAdjustment]) {
         if points != 0 {
             breakdown.append(ScoreAdjustment(label: label, points: points))
         }
+    }
+
+    public static func alcoholAdjustment(for drinks: Int) -> Int {
+        if drinks <= 0 {
+            return 0
+        }
+
+        if drinks <= 2 {
+            return drinks * -6
+        }
+
+        if drinks == 3 {
+            return -24
+        }
+
+        return -24 - ((drinks - 3) * 12)
+    }
+
+    public static func recoveryStrainAdjustment(for metrics: AppleWatchMetrics) -> Int {
+        guard
+            let restingHeartRate = metrics.restingHeartRate,
+            let heartRateVariability = metrics.heartRateVariability
+        else {
+            return 0
+        }
+
+        if heartRateVariability < 30 && restingHeartRate >= 75 {
+            return -10
+        }
+
+        return 0
     }
 
     private static func workoutAdjustment(for workoutIntensity: Int) -> Int {

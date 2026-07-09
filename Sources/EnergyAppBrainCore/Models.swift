@@ -40,3 +40,14 @@ public struct DailyEnergyLog {
     let result: EnergyResult
     let actualEnergyOutOf10: Int?
 }
+
+public struct LogSummary {
+    public let totalLogs: Int
+    public let completedLogs: Int
+    public let missingActualEnergy: Int
+    public let averagePredictedEnergy: Double?
+    public let averageActualEnergy: Double?
+    public let lowestActualEnergyDay: String?
+    public let highestActualEnergyDay: String?
+    public let recentTrend: String
+}

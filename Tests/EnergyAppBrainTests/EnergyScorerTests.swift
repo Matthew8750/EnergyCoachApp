@@ -42,6 +42,43 @@ final class EnergyScorerTests: XCTestCase {
         XCTAssertTrue(recoveryRecommendation.message.contains("protect recovery"))
     }
 
+    func testAlcoholPenaltyGetsHarsherAfterThreeDrinks() {
+        XCTAssertEqual(EnergyScorer.alcoholAdjustment(for: 0), 0)
+        XCTAssertEqual(EnergyScorer.alcoholAdjustment(for: 1), -6)
+        XCTAssertEqual(EnergyScorer.alcoholAdjustment(for: 2), -12)
+        XCTAssertEqual(EnergyScorer.alcoholAdjustment(for: 3), -24)
+        XCTAssertEqual(EnergyScorer.alcoholAdjustment(for: 4), -36)
+        XCTAssertEqual(EnergyScorer.alcoholAdjustment(for: 6), -60)
+    }
+
+    func testLowHRVAndHighRestingHeartRateAddsRecoveryStrain() {
+        let input = scenario(named: "High stress workday")
+        let result = EnergyScorer.calculateEnergy(input: input)
+        let recoveryRecommendation = recommendation(category: "Recovery", in: result)
+
+        XCTAssertTrue(result.breakdown.contains { $0.label == "Recovery strain" && $0.points == -10 })
+        XCTAssertTrue(recoveryRecommendation.message.contains("Recovery looks compromised"))
+    }
+
+    func testLogSummaryCalculatesAveragesAndTrend() {
+        let rows = [
+            ["Day 1", "7.0", "0", "false", "6", "4", "60", "50", "8000", "4", "6", "5"],
+            ["Day 2", "8.0", "0", "false", "8", "3", "58", "60", "9000", "3", "9", "8"],
+            ["Day 3", "6.0", "1", "true", "5", "7", "", "", "5000", "2", "4", ""]
+        ]
+
+        let summary = DailyLogStore.makeLogSummary(from: rows)
+
+        XCTAssertEqual(summary.totalLogs, 3)
+        XCTAssertEqual(summary.completedLogs, 2)
+        XCTAssertEqual(summary.missingActualEnergy, 1)
+        XCTAssertEqual(summary.averagePredictedEnergy, 6.333333333333333)
+        XCTAssertEqual(summary.averageActualEnergy, 6.5)
+        XCTAssertEqual(summary.lowestActualEnergyDay, "Day 1")
+        XCTAssertEqual(summary.highestActualEnergyDay, "Day 2")
+        XCTAssertEqual(summary.recentTrend, "Improving")
+    }
+
     private func scenario(named name: String) -> EnergyInput {
         guard let input = DemoData.makeDemoScenarios().first(where: { $0.dateLabel == name }) else {
             XCTFail("Missing scenario named \(name)")
