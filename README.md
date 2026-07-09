@@ -16,6 +16,7 @@ EnergyAppBrain/
   Sources/
     EnergyAppBrain/
       EnergyAppBrain.swift
+    EnergyAppBrainCore/
       Models.swift
       EnergyScorer.swift
       RecommendationEngine.swift
@@ -23,6 +24,9 @@ EnergyAppBrain/
       ReportPrinter.swift
       DailyLogStore.swift
       Formatter.swift
+  Tests/
+    EnergyAppBrainTests/
+      EnergyScorerTests.swift
   ai/
     train_energy_model.py
 ```
@@ -33,6 +37,14 @@ From the `EnergyAppBrain` folder:
 
 ```powershell
 swift run
+```
+
+## Run The Swift Tests
+
+From the `EnergyAppBrain` folder:
+
+```powershell
+swift test
 ```
 
 The Swift app:

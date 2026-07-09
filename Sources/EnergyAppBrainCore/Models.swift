@@ -1,4 +1,4 @@
-struct EnergyInput {
+public struct EnergyInput {
     let dateLabel: String
     let sleepHours: Double
     let alcoholDrinks: Int
@@ -8,7 +8,7 @@ struct EnergyInput {
     let appleWatch: AppleWatchMetrics
 }
 
-struct AppleWatchMetrics {
+public struct AppleWatchMetrics {
     let restingHeartRate: Int?
     let heartRateVariability: Double?
     let steps: Int?
@@ -17,24 +17,24 @@ struct AppleWatchMetrics {
     let workoutIntensityOutOf10: Int?
 }
 
-struct EnergyResult {
+public struct EnergyResult {
     let scoreOutOf100: Int
     let predictedEnergyOutOf10: Int
     let breakdown: [ScoreAdjustment]
     let recommendations: [Recommendation]
 }
 
-struct ScoreAdjustment {
+public struct ScoreAdjustment {
     let label: String
     let points: Int
 }
 
-struct Recommendation {
+public struct Recommendation {
     let category: String
     let message: String
 }
 
-struct DailyEnergyLog {
+public struct DailyEnergyLog {
     let dateLabel: String
     let input: EnergyInput
     let result: EnergyResult

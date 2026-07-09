@@ -1,6 +1,6 @@
 import Foundation
 
-struct TextFormatter {
+public struct TextFormatter {
     static func formatPoints(_ points: Int) -> String {
         if points > 0 {
             return "+\(points)"

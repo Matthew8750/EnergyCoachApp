@@ -1,3 +1,5 @@
+import EnergyAppBrainCore
+
 @main
 struct EnergyAppBrain {
     static func main() {

@@ -1,5 +1,5 @@
-struct EnergyScorer {
-    static func calculateEnergy(input: EnergyInput) -> EnergyResult {
+public struct EnergyScorer {
+    public static func calculateEnergy(input: EnergyInput) -> EnergyResult {
         var breakdown: [ScoreAdjustment] = [
             ScoreAdjustment(label: "Starting baseline", points: 80)
         ]

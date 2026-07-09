@@ -1,5 +1,5 @@
-struct ReportPrinter {
-    static func printReport(for input: EnergyInput) {
+public struct ReportPrinter {
+    public static func printReport(for input: EnergyInput) {
         let result = EnergyScorer.calculateEnergy(input: input)
 
         print("Energy check: \(input.dateLabel)")

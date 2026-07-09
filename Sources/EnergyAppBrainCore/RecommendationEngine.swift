@@ -1,5 +1,5 @@
-struct RecommendationEngine {
-    static func makeRecommendations(for input: EnergyInput, score: Int) -> [Recommendation] {
+public struct RecommendationEngine {
+    public static func makeRecommendations(for input: EnergyInput, score: Int) -> [Recommendation] {
         [
             Recommendation(
                 category: "Recovery",

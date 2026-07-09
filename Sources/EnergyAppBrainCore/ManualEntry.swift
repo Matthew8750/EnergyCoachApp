@@ -1,12 +1,12 @@
 import Foundation
 
-struct ManualEntryResult {
-    let input: EnergyInput
-    let log: DailyEnergyLog
+public struct ManualEntryResult {
+    public let input: EnergyInput
+    public let log: DailyEnergyLog
 }
 
-struct ManualEntry {
-    static func collectDailyLog() -> ManualEntryResult {
+public struct ManualEntry {
+    public static func collectDailyLog() -> ManualEntryResult {
         print("")
         print("Manual daily log")
         print("Press Enter to use the default shown in brackets.")
@@ -53,7 +53,7 @@ struct ManualEntry {
         return ManualEntryResult(input: input, log: log)
     }
 
-    static func promptString(_ label: String, defaultValue: String) -> String {
+    public static func promptString(_ label: String, defaultValue: String) -> String {
         print("\(label) [\(defaultValue)]: ", terminator: "")
         let value = readLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         return value.isEmpty ? defaultValue : value

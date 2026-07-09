@@ -1,5 +1,5 @@
-struct DemoData {
-    static func makeDemoScenarios() -> [EnergyInput] {
+public struct DemoData {
+    public static func makeDemoScenarios() -> [EnergyInput] {
         [
             EnergyInput(
                 dateLabel: "Bad sleep + alcohol",

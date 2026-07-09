@@ -1,7 +1,7 @@
 import Foundation
 
-struct DailyLogStore {
-    static func makeDailyLogs(from inputs: [EnergyInput]) -> [DailyEnergyLog] {
+public struct DailyLogStore {
+    public static func makeDailyLogs(from inputs: [EnergyInput]) -> [DailyEnergyLog] {
         let actualEnergyRatings = [
             "Bad sleep + alcohol": 3,
             "Good recovery day": 9,
@@ -19,12 +19,12 @@ struct DailyLogStore {
         }
     }
 
-    static func printDailyLogTable(_ logs: [DailyEnergyLog]) {
+    public static func printDailyLogTable(_ logs: [DailyEnergyLog]) {
         print("AI training data preview")
         print(makeDailyLogCSV(from: logs))
     }
 
-    static func saveDailyLogTable(_ logs: [DailyEnergyLog], fileName: String) {
+    public static func saveDailyLogTable(_ logs: [DailyEnergyLog], fileName: String) {
         let csv = makeDailyLogCSV(from: logs)
         let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
             .appendingPathComponent(fileName)
@@ -39,7 +39,7 @@ struct DailyLogStore {
         }
     }
 
-    static func appendDailyLog(_ log: DailyEnergyLog, fileName: String) {
+    public static func appendDailyLog(_ log: DailyEnergyLog, fileName: String) {
         let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
             .appendingPathComponent(fileName)
         let row = makeDailyLogCSVRow(from: log)
@@ -64,7 +64,7 @@ struct DailyLogStore {
         }
     }
 
-    static func updateMissingActualEnergy(fileName: String) {
+    public static func updateMissingActualEnergy(fileName: String) {
         let fileURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
             .appendingPathComponent(fileName)
 
