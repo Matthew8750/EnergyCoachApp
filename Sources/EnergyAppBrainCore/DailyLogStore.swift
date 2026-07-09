@@ -136,6 +136,26 @@ public struct DailyLogStore {
         }
     }
 
+    public static func printRecentLogs(fileName: String, count: Int = 5) {
+        do {
+            let rows = try loadCSVRows(fileName: fileName)
+            let lines = makeRecentLogLines(from: rows, count: count)
+
+            guard !lines.isEmpty else {
+                print("No saved logs found yet.")
+                return
+            }
+
+            print("")
+            print("Recent logs")
+            for line in lines {
+                print(line)
+            }
+        } catch {
+            print("Could not read \(fileName): \(error.localizedDescription)")
+        }
+    }
+
     public static func makeLogSummary(from rows: [[String]]) -> LogSummary {
         let dataRows = rows.filter { !$0.isEmpty }
         let completedRows = dataRows.filter { row in
@@ -165,6 +185,24 @@ public struct DailyLogStore {
             highestActualEnergyDay: highestRow?[safe: 0],
             recentTrend: recentTrend(from: actualValues)
         )
+    }
+
+    public static func makeRecentLogLines(from rows: [[String]], count: Int = 5) -> [String] {
+        let recentRows = rows
+            .filter { !$0.isEmpty }
+            .suffix(count)
+            .reversed()
+
+        return recentRows.enumerated().map { index, row in
+            let date = row[safe: 0] ?? "Unknown date"
+            let sleepHours = row[safe: 1] ?? "?"
+            let alcoholDrinks = row[safe: 2] ?? "?"
+            let predictedEnergy = row[safe: 10] ?? "?"
+            let actualEnergy = row[safe: 11] ?? ""
+            let actualText = actualEnergy.isEmpty ? "actual missing" : "actual \(actualEnergy)/10"
+
+            return "\(index + 1). \(date) - sleep \(sleepHours)h, alcohol \(alcoholDrinks), predicted \(predictedEnergy)/10, \(actualText)"
+        }
     }
 
     private static func makeDailyLogCSV(from logs: [DailyEnergyLog]) -> String {

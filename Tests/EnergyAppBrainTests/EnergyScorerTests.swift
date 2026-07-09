@@ -79,6 +79,22 @@ final class EnergyScorerTests: XCTestCase {
         XCTAssertEqual(summary.recentTrend, "Improving")
     }
 
+    func testRecentLogLinesShowNewestFirstAndMissingActualEnergy() {
+        let rows = [
+            ["Day 1", "7.0", "0", "false", "6", "4", "60", "50", "8000", "4", "6", "5"],
+            ["Day 2", "8.0", "0", "false", "8", "3", "58", "60", "9000", "3", "9", "8"],
+            ["Day 3", "6.0", "1", "true", "5", "7", "", "", "5000", "2", "4", ""]
+        ]
+
+        let lines = DailyLogStore.makeRecentLogLines(from: rows, count: 2)
+
+        XCTAssertEqual(lines.count, 2)
+        XCTAssertTrue(lines[0].contains("Day 3"))
+        XCTAssertTrue(lines[0].contains("actual missing"))
+        XCTAssertTrue(lines[1].contains("Day 2"))
+        XCTAssertTrue(lines[1].contains("actual 8/10"))
+    }
+
     private func scenario(named name: String) -> EnergyInput {
         guard let input = DemoData.makeDemoScenarios().first(where: { $0.dateLabel == name }) else {
             XCTFail("Missing scenario named \(name)")

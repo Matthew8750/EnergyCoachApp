@@ -14,6 +14,7 @@ Status: early prototype.
 - Gives recovery, training, sleep, caffeine, and nutrition recommendations.
 - Saves daily logs to CSV.
 - Lets actual energy be filled in later.
+- Shows recent saved logs.
 - Uses Python to predict actual energy from logged patterns.
 - Keeps private health/lifestyle data out of Git.
 
@@ -88,8 +89,9 @@ The app menu:
 1. Add today's log
 2. Update actual energy
 3. View log summary
-4. Run demo scenarios
-5. Exit
+4. View recent logs
+5. Run demo scenarios
+6. Exit
 ```
 
 Manual mode asks for:
@@ -108,7 +110,7 @@ Manual mode asks for:
 - workout intensity,
 - actual energy.
 
-If actual energy is not known yet, it can be left blank and added later through option 3.
+If actual energy is not known yet, it can be left blank and added later through option 2.
 
 ## Python AI Prototype
 

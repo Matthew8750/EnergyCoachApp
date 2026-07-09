@@ -7,16 +7,19 @@ struct EnergyAppBrain {
         print("1. Add today's log")
         print("2. Update actual energy")
         print("3. View log summary")
-        print("4. Run demo scenarios")
-        print("5. Exit")
+        print("4. View recent logs")
+        print("5. Run demo scenarios")
+        print("6. Exit")
         print("")
 
         let mode = ManualEntry.promptString("Choose mode", defaultValue: "1")
 
-        if mode == "5" {
+        if mode == "6" {
             print("Done.")
-        } else if mode == "4" {
+        } else if mode == "5" {
             runDemoMode()
+        } else if mode == "4" {
+            DailyLogStore.printRecentLogs(fileName: "energy_logs.csv")
         } else if mode == "3" {
             DailyLogStore.printLogSummary(fileName: "energy_logs.csv")
         } else if mode == "2" {
