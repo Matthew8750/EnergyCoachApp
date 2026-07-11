@@ -2,6 +2,10 @@
 .swiftpm/
 .vscode/
 
+# Xcode user-specific state
+xcuserdata/
+*.xcuserstate
+
 energy_logs.csv
 
 __pycache__/
