@@ -8,6 +8,18 @@ xcuserdata/
 
 energy_logs.csv
 
+# Never commit local configuration or credentials
+.env
+.env.*
+*.mobileprovision
+*.p12
+*.cer
+*.pem
+*.key
+
+# Real-device screenshots may contain personal health information
+AppStore/Screenshots/*.png
+
 __pycache__/
 *.pyc
 
