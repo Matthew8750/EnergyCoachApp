@@ -304,7 +304,7 @@
 			mainGroup = E6D550E130026F1100415D7A;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../.." */,
+				E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference ".." */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E6D550EB30026F1100415D7A /* Products */;
@@ -802,21 +802,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../.." */ = {
+		E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference ".." */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../..;
+			relativePath = ..;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		E6D55116300291A100415D7A /* EnergyAppBrainCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../.." */;
+			package = E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference ".." */;
 			productName = EnergyAppBrainCore;
 		};
 		E6D5521730068A1100415D7A /* EnergyAppBrainCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../.." */;
+			package = E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference ".." */;
 			productName = EnergyAppBrainCore;
 		};
 /* End XCSwiftPackageProductDependency section */
