@@ -4,6 +4,16 @@ import PackageDescription
 
 let package = Package(
     name: "EnergyAppBrain",
+    products: [
+        .library(
+            name: "EnergyAppBrainCore",
+            targets: ["EnergyAppBrainCore"]
+        ),
+        .executable(
+            name: "EnergyAppBrain",
+            targets: ["EnergyAppBrain"]
+        )
+    ],
     targets: [
         .target(
             name: "EnergyAppBrainCore"

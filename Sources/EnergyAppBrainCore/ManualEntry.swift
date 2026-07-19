@@ -14,8 +14,11 @@ public struct ManualEntry {
 
         let dateLabel = promptString("Day name or date", defaultValue: todayDateLabel())
         let sleepHours = promptDouble("Sleep hours", defaultValue: 7.0)
+        let hoursAwake = promptOptionalDouble("Hours awake")
         let alcoholDrinks = promptInt("Alcohol drinks", defaultValue: 0)
+        let previousNightAlcoholDrinks = promptInt("Previous night alcohol drinks", defaultValue: 0)
         let hadCaffeineAfter6pm = promptBool("Caffeine after 6pm", defaultValue: false)
+        let hoursSinceLateCaffeine = hadCaffeineAfter6pm ? promptOptionalDouble("Hours since late caffeine") : nil
         let moodOutOf10 = promptIntInRange("Mood 1-10", defaultValue: 6, range: 1...10)
         let stressOutOf10 = promptIntInRange("Stress 1-10", defaultValue: 5, range: 1...10)
         let restingHeartRate = promptOptionalInt("Resting heart rate bpm")
@@ -30,7 +33,9 @@ public struct ManualEntry {
             dateLabel: dateLabel,
             sleepHours: sleepHours,
             alcoholDrinks: alcoholDrinks,
+            previousNightAlcoholDrinks: previousNightAlcoholDrinks,
             hadCaffeineAfter6pm: hadCaffeineAfter6pm,
+            hoursSinceLateCaffeine: hoursSinceLateCaffeine,
             moodOutOf10: moodOutOf10,
             stressOutOf10: stressOutOf10,
             appleWatch: AppleWatchMetrics(
@@ -40,7 +45,8 @@ public struct ManualEntry {
                 activeEnergyBurned: activeEnergyBurned,
                 exerciseMinutes: exerciseMinutes,
                 workoutIntensityOutOf10: workoutIntensity
-            )
+            ),
+            hoursAwake: hoursAwake
         )
         let result = EnergyScorer.calculateEnergy(input: input)
         let log = DailyEnergyLog(

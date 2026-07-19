@@ -6,6 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E6D55117300291A100415D7A /* EnergyAppBrainCore in Frameworks */ = {isa = PBXBuildFile; productRef = E6D55116300291A100415D7A /* EnergyAppBrainCore */; };
+		E6D5511930058B0200415D7A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D5511830058B0200415D7A /* HealthKit.framework */; };
+		E6D5520130068A1100415D7A /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D5520030068A1100415D7A /* WatchConnectivity.framework */; };
+		E6D5521030068A1100415D7A /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D5520030068A1100415D7A /* WatchConnectivity.framework */; };
+		E6D5521830068A1100415D7A /* EnergyAppBrainCore in Frameworks */ = {isa = PBXBuildFile; productRef = E6D5521730068A1100415D7A /* EnergyAppBrainCore */; };
+		E6D5521A30068A1100415D7A /* EnergyCoachWatchApp/Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6D5521930068A1100415D7A /* EnergyCoachWatchApp/Assets.xcassets */; };
+		E6D5521C30068A1100415D7A /* EnergyCoachWatchApp/EnergyCoachWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D5521B30068A1100415D7A /* EnergyCoachWatchApp/EnergyCoachWatchApp.swift */; };
+		E6D5521E30068A1100415D7A /* EnergyCoachWatchApp/WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D5521D30068A1100415D7A /* EnergyCoachWatchApp/WatchContentView.swift */; };
+		E6D5522030068A1100415D7A /* EnergyCoachWatchApp/WatchEnergyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D5521F30068A1100415D7A /* EnergyCoachWatchApp/WatchEnergyModel.swift */; };
+		E6D5522230068A1100415D7A /* EnergyCoachWatchApp/Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E6D5522130068A1100415D7A /* EnergyCoachWatchApp/Icon.png */; };
+		E6D552253006D9C300415D7A /* EnergyCoachWatchApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E6D5520230068A1100415D7A /* EnergyCoachWatchApp.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+	/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E6D550F930026F1800415D7A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,12 +35,41 @@
 			remoteGlobalIDString = E6D550E930026F1100415D7A;
 			remoteInfo = EnergyCoach;
 		};
-/* End PBXContainerItemProxy section */
+		E6D552273006D9C300415D7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6D550E230026F1100415D7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6D5520930068A1100415D7A;
+			remoteInfo = EnergyCoachWatchApp;
+		};
+	/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E6D552243006D9C300415D7A /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				E6D552253006D9C300415D7A /* EnergyCoachWatchApp.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E6D550EA30026F1100415D7A /* EnergyCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnergyCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6D550F830026F1800415D7A /* EnergyCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnergyCoachTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6D5510230026F1800415D7A /* EnergyCoachUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnergyCoachUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6D5511830058B0200415D7A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		E6D5520030068A1100415D7A /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
+		E6D5520230068A1100415D7A /* EnergyCoachWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnergyCoachWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6D5521930068A1100415D7A /* EnergyCoachWatchApp/Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = EnergyCoachWatchApp/Assets.xcassets; sourceTree = "<group>"; };
+		E6D5521B30068A1100415D7A /* EnergyCoachWatchApp/EnergyCoachWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyCoachWatchApp/EnergyCoachWatchApp.swift; sourceTree = "<group>"; };
+		E6D5521D30068A1100415D7A /* EnergyCoachWatchApp/WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyCoachWatchApp/WatchContentView.swift; sourceTree = "<group>"; };
+		E6D5521F30068A1100415D7A /* EnergyCoachWatchApp/WatchEnergyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyCoachWatchApp/WatchEnergyModel.swift; sourceTree = "<group>"; };
+		E6D5522130068A1100415D7A /* EnergyCoachWatchApp/Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnergyCoachWatchApp/Icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -45,6 +88,11 @@
 			path = EnergyCoachUITests;
 			sourceTree = "<group>";
 		};
+		E6D5520330068A1100415D7A /* EnergyCoachWatchApp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EnergyCoachWatchApp;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +100,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6D55117300291A100415D7A /* EnergyAppBrainCore in Frameworks */,
+				E6D5511930058B0200415D7A /* HealthKit.framework in Frameworks */,
+				E6D5520130068A1100415D7A /* WatchConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +120,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E6D5520630068A1100415D7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6D5521030068A1100415D7A /* WatchConnectivity.framework in Frameworks */,
+				E6D5521830068A1100415D7A /* EnergyAppBrainCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -76,9 +136,16 @@
 			isa = PBXGroup;
 			children = (
 				E6D550EC30026F1100415D7A /* EnergyCoach */,
+				E6D5520330068A1100415D7A /* EnergyCoachWatchApp */,
+				E6D5521B30068A1100415D7A /* EnergyCoachWatchApp/EnergyCoachWatchApp.swift */,
+				E6D5521D30068A1100415D7A /* EnergyCoachWatchApp/WatchContentView.swift */,
+				E6D5521F30068A1100415D7A /* EnergyCoachWatchApp/WatchEnergyModel.swift */,
+				E6D5521930068A1100415D7A /* EnergyCoachWatchApp/Assets.xcassets */,
+				E6D5522130068A1100415D7A /* EnergyCoachWatchApp/Icon.png */,
 				E6D550FB30026F1800415D7A /* EnergyCoachTests */,
 				E6D5510530026F1800415D7A /* EnergyCoachUITests */,
 				E6D550EB30026F1100415D7A /* Products */,
+				E6D551323006A93F00415D7A /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,10 +153,20 @@
 			isa = PBXGroup;
 			children = (
 				E6D550EA30026F1100415D7A /* EnergyCoach.app */,
+				E6D5520230068A1100415D7A /* EnergyCoachWatchApp.app */,
 				E6D550F830026F1800415D7A /* EnergyCoachTests.xctest */,
 				E6D5510230026F1800415D7A /* EnergyCoachUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E6D551323006A93F00415D7A /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				E6D5511830058B0200415D7A /* HealthKit.framework */,
+				E6D5520030068A1100415D7A /* WatchConnectivity.framework */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -98,20 +175,23 @@
 		E6D550E930026F1100415D7A /* EnergyCoach */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6D5510C30026F1900415D7A /* Build configuration list for PBXNativeTarget "EnergyCoach" */;
-			buildPhases = (
-				E6D550E630026F1100415D7A /* Sources */,
-				E6D550E730026F1100415D7A /* Frameworks */,
-				E6D550E830026F1100415D7A /* Resources */,
-			);
+				buildPhases = (
+					E6D550E630026F1100415D7A /* Sources */,
+					E6D550E730026F1100415D7A /* Frameworks */,
+					E6D550E830026F1100415D7A /* Resources */,
+					E6D552243006D9C300415D7A /* Embed Watch Content */,
+				);
 			buildRules = (
 			);
-			dependencies = (
-			);
+				dependencies = (
+					E6D552263006D9C300415D7A /* PBXTargetDependency */,
+				);
 			fileSystemSynchronizedGroups = (
 				E6D550EC30026F1100415D7A /* EnergyCoach */,
 			);
 			name = EnergyCoach;
 			packageProductDependencies = (
+				E6D55116300291A100415D7A /* EnergyAppBrainCore */,
 			);
 			productName = EnergyCoach;
 			productReference = E6D550EA30026F1100415D7A /* EnergyCoach.app */;
@@ -163,6 +243,26 @@
 			productReference = E6D5510230026F1800415D7A /* EnergyCoachUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		E6D5520930068A1100415D7A /* EnergyCoachWatchApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E6D5521430068A1100415D7A /* Build configuration list for PBXNativeTarget "EnergyCoachWatchApp" */;
+			buildPhases = (
+				E6D5520530068A1100415D7A /* Sources */,
+				E6D5520630068A1100415D7A /* Frameworks */,
+				E6D5520730068A1100415D7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EnergyCoachWatchApp;
+			packageProductDependencies = (
+				E6D5521730068A1100415D7A /* EnergyAppBrainCore */,
+			);
+			productName = EnergyCoachWatchApp;
+			productReference = E6D5520230068A1100415D7A /* EnergyCoachWatchApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -175,6 +275,11 @@
 				TargetAttributes = {
 					E6D550E930026F1100415D7A = {
 						CreatedOnToolsVersion = 16.4;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					E6D550F730026F1800415D7A = {
 						CreatedOnToolsVersion = 16.4;
@@ -183,6 +288,9 @@
 					E6D5510130026F1800415D7A = {
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = E6D550E930026F1100415D7A;
+					};
+					E6D5520930068A1100415D7A = {
+						CreatedOnToolsVersion = 16.4;
 					};
 				};
 			};
@@ -196,7 +304,7 @@
 			mainGroup = E6D550E130026F1100415D7A;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../../EnergyAppBrain" */,
+				E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../.." */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E6D550EB30026F1100415D7A /* Products */;
@@ -204,6 +312,7 @@
 			projectRoot = "";
 			targets = (
 				E6D550E930026F1100415D7A /* EnergyCoach */,
+				E6D5520930068A1100415D7A /* EnergyCoachWatchApp */,
 				E6D550F730026F1800415D7A /* EnergyCoachTests */,
 				E6D5510130026F1800415D7A /* EnergyCoachUITests */,
 			);
@@ -232,6 +341,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E6D5520730068A1100415D7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6D5521A30068A1100415D7A /* EnergyCoachWatchApp/Assets.xcassets in Resources */,
+				E6D5522230068A1100415D7A /* EnergyCoachWatchApp/Icon.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -256,6 +374,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E6D5520530068A1100415D7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6D5521C30068A1100415D7A /* EnergyCoachWatchApp/EnergyCoachWatchApp.swift in Sources */,
+				E6D5521E30068A1100415D7A /* EnergyCoachWatchApp/WatchContentView.swift in Sources */,
+				E6D5522030068A1100415D7A /* EnergyCoachWatchApp/WatchEnergyModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -269,7 +397,12 @@
 			target = E6D550E930026F1100415D7A /* EnergyCoach */;
 			targetProxy = E6D5510330026F1800415D7A /* PBXContainerItemProxy */;
 		};
-/* End PBXTargetDependency section */
+		E6D552263006D9C300415D7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6D5520930068A1100415D7A /* EnergyCoachWatchApp */;
+			targetProxy = E6D552273006D9C300415D7A /* PBXContainerItemProxy */;
+		};
+	/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E6D5510A30026F1900415D7A /* Debug */ = {
@@ -392,10 +525,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EnergyCoach/EnergyCoach.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59MKGHXSKT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Energy Coach reads sleep, heart, activity, and exercise data to estimate your daily energy.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Energy Coach may save health and activity information you choose to record so it remains available in Apple Health.";
+				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -406,7 +544,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
@@ -415,10 +553,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Debug;
@@ -429,10 +567,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EnergyCoach/EnergyCoach.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59MKGHXSKT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Energy Coach reads sleep, heart, activity, and exercise data to estimate your daily energy.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Energy Coach may save health and activity information you choose to record so it remains available in Apple Health.";
+				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -443,7 +586,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
@@ -452,10 +595,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
 			name = Release;
@@ -467,16 +610,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoachTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EnergyCoach.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EnergyCoach";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -489,16 +632,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoachTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EnergyCoach.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EnergyCoach";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -507,19 +650,20 @@
 		E6D5511330026F1900415D7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoachUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = EnergyCoach;
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -528,21 +672,82 @@
 		E6D5511430026F1900415D7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoachUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = EnergyCoach;
 				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Release;
+		};
+		E6D5521230068A1100415D7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+				buildSettings = {
+					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+					ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+					CODE_SIGN_STYLE = Automatic;
+					CURRENT_PROJECT_VERSION = 1;
+					DEVELOPMENT_TEAM = 59MKGHXSKT;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_KEY_CFBundleIconFile = Icon.png;
+				INFOPLIST_KEY_CFBundleIconName = AppIcon;
+				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.Matthew.EnergyCoach;
+				INFOPLIST_KEY_WKRunsIndependently = YES;
+				INFOPLIST_FILE = EnergyCoachWatchApp/Info.plist;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoach.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		E6D5521330068A1100415D7A /* Release */ = {
+			isa = XCBuildConfiguration;
+				buildSettings = {
+					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+					ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+					CODE_SIGN_STYLE = Automatic;
+					CURRENT_PROJECT_VERSION = 1;
+					DEVELOPMENT_TEAM = 59MKGHXSKT;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_KEY_CFBundleIconFile = Icon.png;
+				INFOPLIST_KEY_CFBundleIconName = AppIcon;
+				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.Matthew.EnergyCoach;
+				INFOPLIST_KEY_WKRunsIndependently = YES;
+				INFOPLIST_FILE = EnergyCoachWatchApp/Info.plist;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoach.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -585,14 +790,36 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		E6D5521430068A1100415D7A /* Build configuration list for PBXNativeTarget "EnergyCoachWatchApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6D5521230068A1100415D7A /* Debug */,
+				E6D5521330068A1100415D7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../../EnergyAppBrain" */ = {
+		E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../.." */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../EnergyAppBrain;
+			relativePath = ../..;
 		};
 /* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E6D55116300291A100415D7A /* EnergyAppBrainCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../.." */;
+			productName = EnergyAppBrainCore;
+		};
+		E6D5521730068A1100415D7A /* EnergyAppBrainCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E6D5511530026FC800415D7A /* XCLocalSwiftPackageReference "../.." */;
+			productName = EnergyAppBrainCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E6D550E230026F1100415D7A /* Project object */;
 }

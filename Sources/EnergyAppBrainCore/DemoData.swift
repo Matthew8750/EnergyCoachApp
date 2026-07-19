@@ -6,6 +6,7 @@ public struct DemoData {
                 sleepHours: 5.5,
                 alcoholDrinks: 3,
                 hadCaffeineAfter6pm: true,
+                hoursSinceLateCaffeine: 7,
                 moodOutOf10: 5,
                 stressOutOf10: 7,
                 appleWatch: AppleWatchMetrics(
@@ -38,6 +39,7 @@ public struct DemoData {
                 sleepHours: 6.6,
                 alcoholDrinks: 0,
                 hadCaffeineAfter6pm: true,
+                hoursSinceLateCaffeine: 7,
                 moodOutOf10: 4,
                 stressOutOf10: 9,
                 appleWatch: AppleWatchMetrics(
