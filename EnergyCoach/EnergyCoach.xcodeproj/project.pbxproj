@@ -533,6 +533,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Energy Coach reads sleep, heart, activity, and exercise data to estimate your daily energy.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Energy Coach may save health and activity information you choose to record so it remains available in Apple Health.";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -575,6 +576,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Energy Coach reads sleep, heart, activity, and exercise data to estimate your daily energy.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Energy Coach may save health and activity information you choose to record so it remains available in Apple Health.";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
