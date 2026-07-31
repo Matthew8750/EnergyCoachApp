@@ -124,7 +124,11 @@ struct ContentView: View {
                 ScrollView {
                     VStack(spacing: 18) {
                     ScoreHeader(result: result).id("dashboard")
-                    RecommendationsSection(recommendations: result.recommendations).id("recommendations")
+                    RecommendationsSection(
+                        recommendations: result.recommendations,
+                        showSources: { isShowingAbout = true }
+                    )
+                    .id("recommendations")
                     DailyCheckInSection(
                         predictedEnergyOutOf10: result.predictedEnergyOutOf10,
                         actualEnergyOutOf10: $actualEnergyOutOf10,
@@ -594,9 +598,46 @@ private struct AboutAndPrivacyView: View {
 
                 Section("How estimates work") {
                     Text("The estimate uses rules based on signals such as sleep, time awake, activity, recovery measurements, and optional lifestyle check-ins. It may be incomplete or inaccurate when data is missing.")
+                    Text("Energy Coach uses a heuristic, rules-based model. Its score, recovery-risk label, and recommendations have not been clinically validated and should not be used for medical or safety-critical decisions.")
+                        .foregroundStyle(.secondary)
+                }
+
+                Section("Sources & evidence") {
+                    Text("These independent sources provide general background for the wellness suggestions in Energy Coach. They do not validate the app's score or provide advice tailored to an individual.")
+
+                    SourceLink(
+                        title: "Adult sleep duration",
+                        publisher: "CDC",
+                        url: "https://www.cdc.gov/nchs/data/databriefs/db559.pdf"
+                    )
+                    SourceLink(
+                        title: "Physical activity guidelines",
+                        publisher: "World Health Organization",
+                        url: "https://www.who.int/publications/i/item/9789240014886"
+                    )
+                    SourceLink(
+                        title: "Heart rate and exercise",
+                        publisher: "American Heart Association",
+                        url: "https://www.heart.org/en/healthy-living/exercise-and-physical-activity/fitness-basics/target-heart-rates"
+                    )
+                    SourceLink(
+                        title: "Caffeine, sleep, and tiredness",
+                        publisher: "NHS",
+                        url: "https://www.nhs.uk/live-well/sleep-and-tiredness/self-help-tips-to-fight-fatigue/"
+                    )
+                    SourceLink(
+                        title: "Alcohol and sleep",
+                        publisher: "NHS",
+                        url: "https://www.nhs.uk/live-well/alcohol-advice/tips-on-cutting-down-alcohol/"
+                    )
+                    SourceLink(
+                        title: "Hydration guidance",
+                        publisher: "NHS",
+                        url: "https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/water-drinks-nutrition/"
+                    )
                 }
             }
-            .navigationTitle("About & Privacy")
+            .navigationTitle("About, Sources & Privacy")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -605,6 +646,35 @@ private struct AboutAndPrivacyView: View {
                     }
                 }
             }
+        }
+    }
+}
+
+private struct SourceLink: View {
+    let title: String
+    let publisher: String
+    let url: String
+
+    var body: some View {
+        if let destination = URL(string: url) {
+            Link(destination: destination) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(title)
+                            .foregroundStyle(.primary)
+                        Text(publisher)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Spacer()
+
+                    Image(systemName: "arrow.up.right.square")
+                        .accessibilityHidden(true)
+                }
+            }
+            .accessibilityLabel("\(title), \(publisher)")
+            .accessibilityHint("Opens the source website")
         }
     }
 }
@@ -1270,6 +1340,7 @@ private struct InputSection: View {
 
 private struct RecommendationsSection: View {
     let recommendations: [Recommendation]
+    let showSources: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -1297,6 +1368,14 @@ private struct RecommendationsSection: View {
                     }
                 }
             }
+
+            Button(action: showSources) {
+                Label("Sources & evidence", systemImage: "book.closed")
+                    .font(.subheadline.weight(.semibold))
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.tint)
+            .accessibilityHint("Shows sources for the wellness recommendations")
         }
         .padding(16)
         .background(Color.teal.opacity(0.12), in: RoundedRectangle(cornerRadius: 8))
