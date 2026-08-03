@@ -180,6 +180,7 @@ struct ContentView: View {
                     BaselineSection(baselines: personalBaselines)
                     BreakdownSection(adjustments: result.breakdown).id("breakdown")
                     InputSection(
+                        hasLinkedHealthData: hasLinkedHealthData,
                         sleepHours: $sleepHours,
                         hoursAwake: $hoursAwake,
                         alcoholDrinks: $alcoholDrinks,
@@ -776,7 +777,7 @@ private struct HealthDataSection: View {
                     .background(Color.teal.opacity(0.14), in: Circle())
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Apple Watch Data")
+                    Text("Apple Health & Watch")
                         .font(.headline)
                     Text(statusText)
                         .font(.subheadline)
@@ -1209,6 +1210,10 @@ private struct SignalSummarySection: View {
         VStack(alignment: .leading, spacing: 12) {
             SectionTitle(title: "Today’s Signals", systemImage: "gauge.with.dots.needle.bottom.50percent")
 
+            Text("These are the current values being used to calculate today’s energy score.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
             LazyVGrid(columns: columns, spacing: 10) {
                 SignalTile(title: "Sleep", value: String(format: "%.1fh", sleepHours), systemImage: "bed.double")
                 SignalTile(title: "Awake", value: String(format: "%.1fh", hoursAwake), systemImage: "sun.max")
@@ -1358,6 +1363,7 @@ private struct MetricRow: View {
 }
 
 private struct InputSection: View {
+    let hasLinkedHealthData: Bool
     @Binding var sleepHours: Double
     @Binding var hoursAwake: Double
     @Binding var alcoholDrinks: Int
@@ -1374,7 +1380,17 @@ private struct InputSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            SectionTitle(title: "Inputs", systemImage: "slider.horizontal.3")
+            SectionTitle(title: "Manual Inputs & Context", systemImage: "slider.horizontal.3")
+
+            Text("Use this section to add context your Watch cannot measure, or to fill in and correct information Apple Health has not recorded. Changes update today’s estimate immediately and stay on your device.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+
+            inputGroupHeader(
+                "Sleep & daily context",
+                detail: "Sleep may come from Apple Health. Alcohol, caffeine, mood, stress and symptoms are optional manual context."
+            )
 
             SliderRow(
                 title: "Sleep",
@@ -1398,9 +1414,19 @@ private struct InputSection: View {
                 Label("Caffeine after 6pm", systemImage: "cup.and.saucer")
             }
 
-            StepperRow(title: "Mood", value: $moodOutOf10, range: 0...10, suffix: "/10")
-            StepperRow(title: "Stress", value: $stressOutOf10, range: 0...10, suffix: "/10")
-            StepperRow(title: "Illness / symptoms", value: $illnessSeverityOutOf10, range: 0...10, suffix: "/10")
+            OptionalContextStepperRow(title: "Mood", value: $moodOutOf10, zeroLabel: "Not set")
+            OptionalContextStepperRow(title: "Stress", value: $stressOutOf10, zeroLabel: "Not set")
+            OptionalContextStepperRow(title: "Illness / symptoms", value: $illnessSeverityOutOf10, zeroLabel: "None")
+
+            Divider()
+
+            inputGroupHeader(
+                "Health & activity",
+                detail: hasLinkedHealthData
+                    ? "Loaded from Apple Health when available. You can adjust a value if today’s data is incomplete."
+                    : "Connect Apple Health above for automatic values, or enter them manually here."
+            )
+
             StepperRow(title: "Resting heart rate", value: $restingHeartRate, range: 40...110, suffix: "bpm")
 
             SliderRow(
@@ -1418,6 +1444,38 @@ private struct InputSection: View {
         }
         .padding(16)
         .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 8))
+    }
+
+    private func inputGroupHeader(_ title: String, detail: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.subheadline.weight(.bold))
+            Text(detail)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .combine)
+    }
+}
+
+private struct OptionalContextStepperRow: View {
+    let title: String
+    @Binding var value: Int
+    let zeroLabel: String
+
+    var body: some View {
+        Stepper(value: $value, in: 0...10) {
+            HStack {
+                Text(title)
+                Spacer()
+                Text(value == 0 ? zeroLabel : "\(value)/10")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityValue(value == 0 ? zeroLabel : "\(value) out of 10")
+        .accessibilityHint("Optional context for today’s energy estimate.")
     }
 }
 
