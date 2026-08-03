@@ -26,8 +26,11 @@ struct ContentView: View {
     @AppStorage("didDefaultMoodStressToUnknown") private var didDefaultMoodStressToUnknown = false
     @StateObject private var healthKit = HealthKitManager()
     @StateObject private var watchSync = WatchSyncManager()
+    @StateObject private var historyStore = HistoryStore()
+    @StateObject private var subscriptionManager = SubscriptionManager()
 
     @State private var isShowingAbout = false
+    @State private var isShowingHistory = false
 
     @State private var sleepHours = ContentView.isScreenshotMode ? 8.2 : 7.2
     @State private var sleepQuality: SleepQualityMetrics?
@@ -118,6 +121,19 @@ struct ContentView: View {
         return parts.joined(separator: "|")
     }
 
+    private var historySignature: String {
+        [
+            Self.energyDayKey(),
+            String(result.scoreOutOf100),
+            String(result.predictedEnergyOutOf10),
+            hasActualEnergyCheckIn ? String(actualEnergyOutOf10) : "unknown",
+            String(format: "%.1f", sleepHours),
+            String(restingHeartRate),
+            String(format: "%.0f", heartRateVariability),
+            String(activeEnergyBurned)
+        ].joined(separator: "|")
+    }
+
     var body: some View {
         NavigationStack {
             ScrollViewReader { proxy in
@@ -132,7 +148,8 @@ struct ContentView: View {
                     DailyCheckInSection(
                         predictedEnergyOutOf10: result.predictedEnergyOutOf10,
                         actualEnergyOutOf10: $actualEnergyOutOf10,
-                        hasActualEnergyCheckIn: $hasActualEnergyCheckIn
+                        hasActualEnergyCheckIn: $hasActualEnergyCheckIn,
+                        didSave: recordHistory
                     )
                     HealthDataSection(
                         state: Self.isScreenshotMode ? .idle : healthKit.state,
@@ -188,6 +205,14 @@ struct ContentView: View {
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Energy Coach")
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        isShowingHistory = true
+                    } label: {
+                        Label("History", systemImage: "chart.line.uptrend.xyaxis")
+                    }
+                }
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         isShowingAbout = true
@@ -198,6 +223,12 @@ struct ContentView: View {
             }
             .sheet(isPresented: $isShowingAbout) {
                 AboutAndPrivacyView()
+            }
+            .sheet(isPresented: $isShowingHistory) {
+                HistoryView(
+                    historyStore: historyStore,
+                    subscriptionManager: subscriptionManager
+                )
             }
         }
         .task {
@@ -222,9 +253,13 @@ struct ContentView: View {
         }
         .onAppear {
             syncWatch()
+            recordHistory()
         }
         .onChange(of: watchSyncSignature) { _, _ in
             syncWatch()
+        }
+        .onChange(of: historySignature) { _, _ in
+            recordHistory()
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
@@ -370,6 +405,22 @@ struct ContentView: View {
     private func rounded(_ value: Double, places: Int) -> Double {
         let multiplier = pow(10.0, Double(places))
         return (value * multiplier).rounded() / multiplier
+    }
+
+    private func recordHistory() {
+        historyStore.upsert(
+            EnergyHistoryEntry(
+                dayKey: Self.energyDayKey(),
+                date: .now,
+                scoreOutOf100: result.scoreOutOf100,
+                predictedEnergyOutOf10: result.predictedEnergyOutOf10,
+                actualEnergyOutOf10: hasActualEnergyCheckIn ? actualEnergyOutOf10 : nil,
+                sleepHours: sleepHours,
+                restingHeartRate: restingHeartRate,
+                heartRateVariability: heartRateVariability,
+                activeEnergyBurned: activeEnergyBurned
+            )
+        )
     }
 
     private func resetDailyManualInputsIfNeeded() {
@@ -861,6 +912,7 @@ private struct DailyCheckInSection: View {
     let predictedEnergyOutOf10: Int
     @Binding var actualEnergyOutOf10: Int
     @Binding var hasActualEnergyCheckIn: Bool
+    let didSave: () -> Void
 
     @State private var draftActualEnergy = 7.0
 
@@ -951,6 +1003,7 @@ private struct DailyCheckInSection: View {
     private func saveCheckIn() {
         actualEnergyOutOf10 = Int(draftActualEnergy)
         hasActualEnergyCheckIn = true
+        didSave()
     }
 }
 

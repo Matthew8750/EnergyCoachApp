@@ -18,7 +18,7 @@
 		E6D5522030068A1100415D7A /* EnergyCoachWatchApp/WatchEnergyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D5521F30068A1100415D7A /* EnergyCoachWatchApp/WatchEnergyModel.swift */; };
 		E6D5522230068A1100415D7A /* EnergyCoachWatchApp/Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E6D5522130068A1100415D7A /* EnergyCoachWatchApp/Icon.png */; };
 		E6D552253006D9C300415D7A /* EnergyCoachWatchApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E6D5520230068A1100415D7A /* EnergyCoachWatchApp.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-	/* End PBXBuildFile section */
+/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		E6D550F930026F1800415D7A /* PBXContainerItemProxy */ = {
@@ -42,7 +42,7 @@
 			remoteGlobalIDString = E6D5520930068A1100415D7A;
 			remoteInfo = EnergyCoachWatchApp;
 		};
-	/* End PBXContainerItemProxy section */
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		E6D552243006D9C300415D7A /* Embed Watch Content */ = {
@@ -175,17 +175,17 @@
 		E6D550E930026F1100415D7A /* EnergyCoach */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6D5510C30026F1900415D7A /* Build configuration list for PBXNativeTarget "EnergyCoach" */;
-				buildPhases = (
-					E6D550E630026F1100415D7A /* Sources */,
-					E6D550E730026F1100415D7A /* Frameworks */,
-					E6D550E830026F1100415D7A /* Resources */,
-					E6D552243006D9C300415D7A /* Embed Watch Content */,
-				);
+			buildPhases = (
+				E6D550E630026F1100415D7A /* Sources */,
+				E6D550E730026F1100415D7A /* Frameworks */,
+				E6D550E830026F1100415D7A /* Resources */,
+				E6D552243006D9C300415D7A /* Embed Watch Content */,
+			);
 			buildRules = (
 			);
-				dependencies = (
-					E6D552263006D9C300415D7A /* PBXTargetDependency */,
-				);
+			dependencies = (
+				E6D552263006D9C300415D7A /* PBXTargetDependency */,
+			);
 			fileSystemSynchronizedGroups = (
 				E6D550EC30026F1100415D7A /* EnergyCoach */,
 			);
@@ -402,7 +402,7 @@
 			target = E6D5520930068A1100415D7A /* EnergyCoachWatchApp */;
 			targetProxy = E6D552273006D9C300415D7A /* PBXContainerItemProxy */;
 		};
-	/* End PBXTargetDependency section */
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E6D5510A30026F1900415D7A /* Debug */ = {
@@ -531,10 +531,10 @@
 				DEVELOPMENT_TEAM = 59MKGHXSKT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Energy Coach reads sleep, heart, activity, and exercise data to estimate your daily energy.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Energy Coach may save health and activity information you choose to record so it remains available in Apple Health.";
-				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -549,7 +549,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -574,10 +574,10 @@
 				DEVELOPMENT_TEAM = 59MKGHXSKT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Energy Coach reads sleep, heart, activity, and exercise data to estimate your daily energy.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Energy Coach may save health and activity information you choose to record so it remains available in Apple Health.";
-				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -592,7 +592,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -614,7 +614,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoachTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -636,7 +636,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoachTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -658,7 +658,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoachUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -680,7 +680,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoachUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -695,22 +695,22 @@
 		};
 		E6D5521230068A1100415D7A /* Debug */ = {
 			isa = XCBuildConfiguration;
-				buildSettings = {
-					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-					ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-					CODE_SIGN_STYLE = Automatic;
-					CURRENT_PROJECT_VERSION = 1;
-					DEVELOPMENT_TEAM = 59MKGHXSKT;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59MKGHXSKT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = EnergyCoachWatchApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				INFOPLIST_KEY_CFBundleIconFile = Icon.png;
 				INFOPLIST_KEY_CFBundleIconName = AppIcon;
-				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				INFOPLIST_KEY_WKApplication = YES;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.Matthew.EnergyCoach;
 				INFOPLIST_KEY_WKRunsIndependently = YES;
-				INFOPLIST_FILE = EnergyCoachWatchApp/Info.plist;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoach.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -725,22 +725,22 @@
 		};
 		E6D5521330068A1100415D7A /* Release */ = {
 			isa = XCBuildConfiguration;
-				buildSettings = {
-					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-					ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-					CODE_SIGN_STYLE = Automatic;
-					CURRENT_PROJECT_VERSION = 1;
-					DEVELOPMENT_TEAM = 59MKGHXSKT;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 59MKGHXSKT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = EnergyCoachWatchApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				INFOPLIST_KEY_CFBundleIconFile = Icon.png;
 				INFOPLIST_KEY_CFBundleIconName = AppIcon;
-				INFOPLIST_KEY_CFBundleDisplayName = "Energy Coach";
 				INFOPLIST_KEY_WKApplication = YES;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.Matthew.EnergyCoach;
 				INFOPLIST_KEY_WKRunsIndependently = YES;
-				INFOPLIST_FILE = EnergyCoachWatchApp/Info.plist;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Matthew.EnergyCoach.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;

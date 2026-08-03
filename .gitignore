@@ -1,4 +1,6 @@
 .build/
+build/
+EnergyCoach/build/
 .swiftpm/
 .vscode/
 
