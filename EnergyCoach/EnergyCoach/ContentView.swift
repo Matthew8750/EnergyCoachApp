@@ -24,6 +24,7 @@ struct ContentView: View {
     @AppStorage("actualEnergyOutOf10") private var actualEnergyOutOf10 = 0
     @AppStorage("hasActualEnergyCheckIn") private var hasActualEnergyCheckIn = false
     @AppStorage("didDefaultMoodStressToUnknown") private var didDefaultMoodStressToUnknown = false
+    @AppStorage("lastSeenWhatsNewVersion") private var lastSeenWhatsNewVersion = ""
     @StateObject private var healthKit = HealthKitManager()
     @StateObject private var watchSync = WatchSyncManager()
     @StateObject private var historyStore = HistoryStore()
@@ -31,6 +32,7 @@ struct ContentView: View {
 
     @State private var isShowingAbout = false
     @State private var isShowingHistory = false
+    @State private var isShowingWhatsNew = false
 
     @State private var sleepHours = ContentView.isScreenshotMode ? 8.2 : 7.2
     @State private var sleepQuality: SleepQualityMetrics?
@@ -151,6 +153,7 @@ struct ContentView: View {
                         hasActualEnergyCheckIn: $hasActualEnergyCheckIn,
                         didSave: recordHistory
                     )
+                    .id("checkin")
                     HealthDataSection(
                         state: Self.isScreenshotMode ? .idle : healthKit.state,
                         isHealthDataAvailable: Self.isScreenshotMode || healthKit.isHealthDataAvailable,
@@ -196,9 +199,20 @@ struct ContentView: View {
                     .padding(.vertical, 16)
                 }
                 .onAppear {
-                    guard let target = Self.screenshotSection else { return }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        proxy.scrollTo(target, anchor: .top)
+                    if let target = Self.screenshotSection {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            proxy.scrollTo(target, anchor: .top)
+                        }
+                    } else if UserDefaults.standard.bool(forKey: "openDailyCheckInOnLaunch") {
+                        UserDefaults.standard.removeObject(forKey: "openDailyCheckInOnLaunch")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                            withAnimation { proxy.scrollTo("checkin", anchor: .top) }
+                        }
+                    }
+                }
+                .onReceive(NotificationCenter.default.publisher(for: .openEnergyCheckIn)) { _ in
+                    withAnimation {
+                        proxy.scrollTo("checkin", anchor: .top)
                     }
                 }
             }
@@ -254,12 +268,20 @@ struct ContentView: View {
         .onAppear {
             syncWatch()
             recordHistory()
+            if !Self.isScreenshotMode && hasCompletedOnboarding && lastSeenWhatsNewVersion != "1.1" {
+                isShowingWhatsNew = true
+            }
         }
         .onChange(of: watchSyncSignature) { _, _ in
             syncWatch()
         }
         .onChange(of: historySignature) { _, _ in
             recordHistory()
+        }
+        .onChange(of: hasCompletedOnboarding) { _, completed in
+            if !Self.isScreenshotMode && completed && lastSeenWhatsNewVersion != "1.1" {
+                isShowingWhatsNew = true
+            }
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
@@ -272,6 +294,14 @@ struct ContentView: View {
         .fullScreenCover(isPresented: onboardingPresentation) {
             OnboardingView {
                 hasCompletedOnboarding = true
+            }
+        }
+        .sheet(isPresented: $isShowingWhatsNew, onDismiss: {
+            lastSeenWhatsNewVersion = "1.1"
+        }) {
+            WhatsNewView {
+                lastSeenWhatsNewVersion = "1.1"
+                isShowingWhatsNew = false
             }
         }
     }
@@ -1498,6 +1528,64 @@ private struct StepperRow: View {
                     .foregroundStyle(.secondary)
             }
         }
+    }
+}
+
+private struct WhatsNewView: View {
+    let continueAction: () -> Void
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 24) {
+                    Image(systemName: "chart.line.uptrend.xyaxis.circle.fill")
+                        .font(.system(size: 72))
+                        .foregroundStyle(.teal)
+                        .accessibilityHidden(true)
+
+                    VStack(spacing: 8) {
+                        Text("New in Energy Coach 1.1")
+                            .font(.largeTitle.bold())
+                            .multilineTextAlignment(.center)
+                        Text("Understand how your energy changes over time.")
+                            .font(.title3)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+
+                    VStack(alignment: .leading, spacing: 18) {
+                        whatsNewRow("Energy History", detail: "Review scores, sleep, HRV and predicted-versus-actual energy.", icon: "calendar")
+                        whatsNewRow("Check-in Streaks", detail: "Build consistency and celebrate your progress.", icon: "flame.fill")
+                        whatsNewRow("Daily Reminders", detail: "Choose a time for a gentle, optional check-in reminder.", icon: "bell.badge.fill")
+                        whatsNewRow("Energy Coach Pro", detail: "Unlock unlimited history, longer trends, deeper insights and CSV export.", icon: "bolt.heart.fill")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Button("Explore 1.1", action: continueAction)
+                        .buttonStyle(.borderedProminent)
+                        .tint(.teal)
+                        .controlSize(.large)
+                        .frame(maxWidth: .infinity)
+                }
+                .padding(24)
+            }
+            .interactiveDismissDisabled()
+        }
+    }
+
+    private func whatsNewRow(_ title: String, detail: String, icon: String) -> some View {
+        HStack(alignment: .top, spacing: 14) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundStyle(.teal)
+                .frame(width: 30)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title).font(.headline)
+                Text(detail).font(.subheadline).foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 

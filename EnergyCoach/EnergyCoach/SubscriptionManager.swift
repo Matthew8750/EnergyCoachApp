@@ -8,6 +8,8 @@ final class SubscriptionManager: ObservableObject {
 
     @Published private(set) var products: [Product] = []
     @Published private(set) var isPro = false
+    @Published private(set) var activeProductID: String?
+    @Published private(set) var expirationDate: Date?
     @Published private(set) var isLoading = false
     @Published var errorMessage: String?
 
@@ -81,6 +83,8 @@ final class SubscriptionManager: ObservableObject {
 
     func refreshEntitlements() async {
         var hasProEntitlement = false
+        var currentProductID: String?
+        var currentExpirationDate: Date?
 
         for await result in Transaction.currentEntitlements {
             guard let transaction = try? verified(result),
@@ -90,9 +94,23 @@ final class SubscriptionManager: ObservableObject {
             }
 
             hasProEntitlement = true
+            if currentExpirationDate == nil || (transaction.expirationDate ?? .distantFuture) > (currentExpirationDate ?? .distantPast) {
+                currentProductID = transaction.productID
+                currentExpirationDate = transaction.expirationDate
+            }
         }
 
         isPro = hasProEntitlement
+        activeProductID = currentProductID
+        expirationDate = currentExpirationDate
+    }
+
+    var activePlanName: String {
+        switch activeProductID {
+        case Self.monthlyProductID: return "Monthly Pro"
+        case Self.yearlyProductID: return "Yearly Pro"
+        default: return "Energy Coach Pro"
+        }
     }
 
     private func observeTransactions() -> Task<Void, Never> {

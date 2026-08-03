@@ -100,7 +100,9 @@ struct HistoryView: View {
                 VStack(spacing: 18) {
                     if !subscriptionManager.isPro {
                         proBanner
+                        proPreview
                     } else {
+                        subscriptionStatusCard
                         Picker("History range", selection: $selectedRange) {
                             ForEach(HistoryRange.allCases) { range in
                                 Text(range.rawValue).tag(range)
@@ -118,8 +120,10 @@ struct HistoryView: View {
                         .padding(.top, 80)
                     } else {
                         streakCard
+                        milestonesCard
                         if subscriptionManager.isPro {
                             insightsDashboard
+                            energyCalendar
                         }
                         scoreChart
                         predictionChart
@@ -179,7 +183,121 @@ struct HistoryView: View {
                 dayHighlight("Best day", entry: bestDay, color: .green)
                 dayHighlight("Lowest day", entry: lowestDay, color: .orange)
             }
+
+            Text("Averages use the selected date range. Trend compares the first half of that range with the second half; it is a wellness pattern, not a medical assessment.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
+    }
+
+    private var energyCalendar: some View {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: .now)
+        let days = (0..<28).compactMap { offset in
+            calendar.date(byAdding: .day, value: offset - 27, to: today)
+        }
+        let scores = Dictionary(uniqueKeysWithValues: allEntries.map {
+            (calendar.startOfDay(for: $0.date), $0.scoreOutOf100)
+        })
+
+        return historyCard(title: "28-Day Energy Calendar", subtitle: "Scores shown inside each day") {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 6), count: 7), spacing: 8) {
+                ForEach(days, id: \.self) { day in
+                    let score = scores[day]
+                    VStack(spacing: 3) {
+                        Text(day, format: .dateTime.weekday(.narrow))
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                        Text(score.map(String.init) ?? "–")
+                            .font(.caption2.bold())
+                            .foregroundStyle(score == nil ? Color.secondary : Color.primary)
+                            .frame(width: 32, height: 32)
+                            .background(calendarColor(for: score), in: Circle())
+                    }
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("\(day.formatted(date: .abbreviated, time: .omitted)), \(score.map { "energy score \($0)" } ?? "no score recorded")")
+                }
+            }
+            Text("Higher and lower scores are identified by both colour and their numeric value.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func calendarColor(for score: Int?) -> Color {
+        guard let score else { return Color.secondary.opacity(0.10) }
+        switch score {
+        case 75...: return Color.green.opacity(0.28)
+        case 50..<75: return Color.orange.opacity(0.28)
+        default: return Color.red.opacity(0.25)
+        }
+    }
+
+    private var subscriptionStatusCard: some View {
+        HStack(spacing: 14) {
+            Image(systemName: "checkmark.seal.fill")
+                .font(.title2)
+                .foregroundStyle(.teal)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(subscriptionManager.activePlanName)
+                    .font(.headline)
+                if let expirationDate = subscriptionManager.expirationDate {
+                    Text("Current period ends \(expirationDate.formatted(date: .abbreviated, time: .omitted))")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text("Your Pro features are active")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            Spacer()
+            Link("Manage", destination: URL(string: "https://apps.apple.com/account/subscriptions")!)
+                .font(.subheadline.weight(.semibold))
+        }
+        .padding(16)
+        .background(Color.teal.opacity(0.10), in: RoundedRectangle(cornerRadius: 14))
+        .accessibilityElement(children: .combine)
+    }
+
+    private var proPreview: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Label("Pro insight preview", systemImage: "sparkles")
+                    .font(.headline)
+                Spacer()
+                Image(systemName: "lock.fill")
+                    .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
+            }
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+                previewTile("30-day average", value: "78", icon: "bolt.fill")
+                previewTile("Energy trend", value: "+6", icon: "arrow.up.right")
+                previewTile("Average sleep", value: "7.6h", icon: "bed.double.fill")
+                previewTile("Best day", value: "Tuesday", icon: "star.fill")
+            }
+            Text("Example values shown. Pro calculates these insights from your own locally stored history.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+        .padding(16)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14))
+    }
+
+    private func previewTile(_ title: String, value: String, icon: String) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Label(title, systemImage: icon)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+            Text(value)
+                .font(.headline)
+                .redacted(reason: .placeholder)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(10)
+        .background(Color(.tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 9))
+        .accessibilityLabel("Locked Pro insight: \(title)")
     }
 
     private var streakCard: some View {
@@ -198,6 +316,29 @@ struct HistoryView: View {
         }
         .padding(16)
         .background(Color.orange.opacity(0.10), in: RoundedRectangle(cornerRadius: 14))
+        .accessibilityElement(children: .combine)
+    }
+
+    private var milestonesCard: some View {
+        let milestones = [3, 7, 30]
+        return HStack(spacing: 0) {
+            ForEach(milestones, id: \.self) { target in
+                VStack(spacing: 6) {
+                    Image(systemName: checkInStreak >= target ? "medal.fill" : "medal")
+                        .font(.title2)
+                        .foregroundStyle(checkInStreak >= target ? Color.orange : Color.secondary)
+                    Text("\(target) days")
+                        .font(.caption.weight(.semibold))
+                    Text(checkInStreak >= target ? "Earned" : "\(max(0, target - checkInStreak)) to go")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .accessibilityElement(children: .combine)
+            }
+        }
+        .padding(14)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14))
     }
 
     private var reminderCard: some View {
@@ -266,6 +407,7 @@ struct HistoryView: View {
             }
             .chartYScale(domain: 0...100)
             .frame(height: 220)
+            .accessibilityLabel("Daily energy score chart for \(entries.count) recorded days")
         }
     }
 
@@ -289,6 +431,7 @@ struct HistoryView: View {
             }
             .chartYScale(domain: 0...10)
             .frame(height: 190)
+            .accessibilityLabel("Predicted and actual energy comparison chart")
 
             HStack(spacing: 18) {
                 Label("Predicted", systemImage: "square.fill")

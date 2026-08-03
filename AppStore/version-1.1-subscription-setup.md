@@ -36,8 +36,11 @@ Build healthier awareness with the new Energy History experience:
 
 - Review your latest seven days of scores for free.
 - Build a daily check-in streak and set an optional reminder.
-- Energy Coach Pro adds unlimited history, 30-day and all-time trends, deeper averages and CSV export.
+- Earn 3-day, 7-day and 30-day check-in milestones.
+- Tap a reminder to jump directly to today's check-in.
+- Energy Coach Pro adds unlimited history, 30-day and all-time trends, a 28-day calendar, deeper averages and CSV export.
 - Compare predicted energy with how you actually felt.
+- See a clear subscription status and management shortcut when Pro is active.
 
 To find the subscriptions: open the app, tap the chart icon in the top-left corner, then tap **Explore Pro**. Purchases use Apple's StoreKit. A **Restore Purchases** button, privacy policy, terms of use, renewal disclosure and subscription-management link are shown on the purchase screen.
 
